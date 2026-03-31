@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub Assets Preview
 // @namespace    https://github.com/shawnlinboy/github-assets-preview
-// @version      1.0.2
+// @version      1.0.3
 // @description  Preview text-based files directly in the browser on GitHub release pages
 // @author       Shen Lin
 // @license      MIT
@@ -24,7 +24,7 @@
     const PREVIEW_TYPES = ['.txt', '.md', '.json', '.log', '.csv', '.xml', '.yaml', '.yml', '.ini', '.conf'];
     const RELEASE_PATH_REGEX = /\/releases(?:\/|$)/;
     let observer = null;
-    let lastUrl = location.href;
+    let lastUrl = '';
 
     // Add styles
     GM_addStyle(`
@@ -192,6 +192,7 @@
 
     function attachObserver() {
         if (!document.body) return;
+        if (!RELEASE_PATH_REGEX.test(location.pathname)) return;
 
         if (observer) {
             observer.disconnect();
@@ -202,25 +203,32 @@
     }
 
     function handleRouteChange() {
-        if (location.href === lastUrl) return;
+        if (location.href === lastUrl) {
+            if (RELEASE_PATH_REGEX.test(location.pathname)) {
+                addPreviewButtons();
+            }
+            return;
+        }
 
         lastUrl = location.href;
-        attachObserver();
-        addPreviewButtons();
+
+        if (RELEASE_PATH_REGEX.test(location.pathname)) {
+            attachObserver();
+            addPreviewButtons();
+            return;
+        }
+
+        if (observer) {
+            observer.disconnect();
+            observer = null;
+        }
     }
 
     // Initial run and dynamic listening
-    attachObserver();
-    addPreviewButtons();
+    handleRouteChange();
 
     document.addEventListener('turbo:load', handleRouteChange);
     document.addEventListener('pjax:end', handleRouteChange);
     window.addEventListener('popstate', handleRouteChange);
 
-    // Fallback route watcher for environments where events are missed.
-    setInterval(() => {
-        if (location.href !== lastUrl) {
-            handleRouteChange();
-        }
-    }, 500);
 })();

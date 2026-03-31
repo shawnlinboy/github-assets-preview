@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub Assets Preview
 // @namespace    https://github.com/shawnlinboy/github-assets-preview
-// @version      1.0.3
+// @version      1.0.4
 // @description  Preview text-based files directly in the browser on GitHub release pages
 // @author       Shen Lin
 // @license      MIT
@@ -87,8 +87,15 @@
 
         let modal = document.createElement('div');
         modal.className = 'gh-preview-modal';
+        let onEscKeydown = null;
+        const closeModal = () => {
+            if (onEscKeydown) {
+                document.removeEventListener('keydown', onEscKeydown);
+            }
+            modal.remove();
+        };
         modal.onclick = (e) => {
-            if (e.target === modal) modal.remove();
+            if (e.target === modal) closeModal();
         };
 
         let modalContent = document.createElement('div');
@@ -101,7 +108,7 @@
         let closeBtn = document.createElement('button');
         closeBtn.className = 'gh-preview-close';
         closeBtn.textContent = '✕';
-        closeBtn.onclick = () => modal.remove();
+        closeBtn.onclick = closeModal;
         header.appendChild(closeBtn);
 
         let contentArea = document.createElement('pre');
@@ -112,6 +119,13 @@
         modalContent.appendChild(contentArea);
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
+
+        onEscKeydown = (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        };
+        document.addEventListener('keydown', onEscKeydown);
     }
 
     // Add preview buttons

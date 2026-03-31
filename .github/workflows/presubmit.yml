@@ -9,5 +9,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Detect code changes
+        id: changes
+        uses: dorny/paths-filter@v4
+        with:
+          filters: |
+            code:
+              - 'github-assets-preview.user.js'
+              - 'scripts/**'
+              - '.github/workflows/presubmit.yml'
+
       - name: Validate userscript
+        if: steps.changes.outputs.code == 'true'
         run: bash scripts/validate-userscript.sh
+
+      - name: Skip validation for non-code changes
+        if: steps.changes.outputs.code != 'true'
+        run: 'echo "SKIP: Change only touches files which match our filters."'

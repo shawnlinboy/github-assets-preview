@@ -14,7 +14,7 @@ This userscript adds a **Preview** button next to supported release asset links 
 
 ## Screenshot
 
-![Preview screenshot](assets/Preview.png)
+![Preview screenshot](https://cdn.jsdelivr.net/gh/shawnlinboy/github-assets-preview@main/assets/Preview.png)
 
 ## Features
 

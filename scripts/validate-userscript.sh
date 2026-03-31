@@ -26,10 +26,15 @@ for header in "${required_headers[@]}"; do
   fi
 done
 
-if grep -n $'\t' "$SCRIPT_FILE" >/dev/null; then
-  echo "[ERROR] Found tab characters in $SCRIPT_FILE"
-  grep -n $'\t' "$SCRIPT_FILE"
+if ! command -v node >/dev/null 2>&1; then
+  echo "[ERROR] node is required for syntax validation but was not found in PATH."
   exit 1
 fi
 
-echo "[OK] Userscript metadata and style checks passed."
+if ! node --check "$SCRIPT_FILE" >/dev/null 2>&1; then
+  echo "[ERROR] JavaScript syntax check failed: $SCRIPT_FILE"
+  node --check "$SCRIPT_FILE"
+  exit 1
+fi
+
+echo "[OK] All checks passed."

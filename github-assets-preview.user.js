@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub Assets Preview
 // @namespace    https://github.com/shawnlinboy/github-assets-preview
-// @version      1.0.4
+// @version      1.0.5
 // @description  Preview text-based files directly in the browser on GitHub release pages
 // @author       Shen Lin
 // @license      Apache-2.0
@@ -29,19 +29,39 @@
     // Add styles
     GM_addStyle(`
         .gh-preview-modal {
+            --gh-preview-overlay: rgba(15, 23, 42, 0.55);
+            --gh-preview-bg: #ffffff;
+            --gh-preview-surface: #f6f8fa;
+            --gh-preview-text: #24292f;
+            --gh-preview-border: #d0d7de;
+            --gh-preview-close: #57606a;
+            --gh-preview-close-hover: #24292f;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: var(--gh-preview-overlay);
             z-index: 10000;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--gh-preview-text);
+        }
+        @media (prefers-color-scheme: dark) {
+            .gh-preview-modal {
+                --gh-preview-overlay: rgba(1, 4, 9, 0.75);
+                --gh-preview-bg: #0d1117;
+                --gh-preview-surface: #161b22;
+                --gh-preview-text: #e6edf3;
+                --gh-preview-border: #30363d;
+                --gh-preview-close: #8b949e;
+                --gh-preview-close-hover: #f0f6fc;
+            }
         }
         .gh-preview-content {
-            background: #fff;
+            background: var(--gh-preview-bg);
+            color: var(--gh-preview-text);
             border-radius: 8px;
             width: 90%;
             max-width: 900px;
@@ -49,14 +69,15 @@
             display: flex;
             flex-direction: column;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--gh-preview-border);
         }
         .gh-preview-header {
             padding: 1em;
-            border-bottom: 1px solid #e5e5e5;
+            border-bottom: 1px solid var(--gh-preview-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #f6f8fa;
+            background: var(--gh-preview-surface);
         }
         .gh-preview-body {
             margin: 0;
@@ -67,16 +88,17 @@
             white-space: pre-wrap;
             word-wrap: break-word;
             font-family: monospace;
+            color: var(--gh-preview-text);
         }
         .gh-preview-close {
             border: none;
             background: none;
             font-size: 1.5em;
             cursor: pointer;
-            color: #666;
+            color: var(--gh-preview-close);
         }
         .gh-preview-close:hover {
-            color: #000;
+            color: var(--gh-preview-close-hover);
         }
     `);
 

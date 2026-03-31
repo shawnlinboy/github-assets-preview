@@ -6,8 +6,6 @@ This userscript adds a **Preview** button next to supported release asset links 
 
 ## Greasy Fork
 
-[Script Page](https://greasyfork.org/zh-CN/scripts/571911-github-assets-preview)
-
 [![Greasy Fork Total Installs](https://img.shields.io/greasyfork/dt/571911?logo=tampermonkey)](https://greasyfork.org/en/scripts/571911)
 [![Greasy Fork Daily Installs](https://img.shields.io/greasyfork/dd/571911?logo=tampermonkey)](https://greasyfork.org/en/scripts/571911)
 [![Greasy Fork Version](https://img.shields.io/greasyfork/v/571911?logo=tampermonkey)](https://greasyfork.org/en/scripts/571911)
@@ -53,16 +51,19 @@ If you want more file types supported, send a PR or let me know.
 2. For supported text assets, click **Preview** next to the download link.
 3. Read file content in the modal. The script fetches content over HTTP in memory, but does not trigger browser file-save download behavior.
 
-## Development
-
-### Local validation
-
-Run the validation script:
-
-```bash
-bash scripts/validate-userscript.sh
-```
-
 ## License
+```
+Copyright 2026 Shen Lin
 
-[MIT](./LICENSE)
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```

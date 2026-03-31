@@ -4,7 +4,7 @@
 // @version      1.0.4
 // @description  Preview text-based files directly in the browser on GitHub release pages
 // @author       Shen Lin
-// @license      MIT
+// @license      Apache-2.0
 // @homepageURL  https://github.com/shawnlinboy/github-assets-preview
 // @supportURL   https://github.com/shawnlinboy/github-assets-preview/issues
 // @updateURL    https://raw.githubusercontent.com/shawnlinboy/github-assets-preview/main/github-assets-preview.user.js
